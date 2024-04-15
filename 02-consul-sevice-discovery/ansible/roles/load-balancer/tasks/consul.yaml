@@ -43,7 +43,13 @@
     notify:
         - restart nginx
 
-
+# file: This module is used to manage files and directories.
+# path: Specifies the path of the file to be managed (/etc/nginx/sites-enabled/default), 
+# indicating the default Nginx configuration file.
+# state: Specifies the desired state of the file. Here, it's set to absent, 
+# indicating that the file should be removed if it exists.
+# notify: Specifies a list of handlers to be notified after the task completes successfully.
+# - restart nginx: This notifies the restart nginx handler, indicating that Nginx should be restarted after the default configuration file is removed.
   
 
 

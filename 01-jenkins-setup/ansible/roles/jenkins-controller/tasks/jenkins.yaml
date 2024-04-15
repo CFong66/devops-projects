@@ -31,6 +31,8 @@
     owner: jenkins
     group: jenkins
     recurse: yes
+# recurse: This parameter, set to yes, indicates that the operation should be applied 
+# recursively to all files and subdirectories within the specified directory.
 
 - name: Remove old Jenkins data directory
   file:

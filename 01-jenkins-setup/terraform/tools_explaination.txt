@@ -1,0 +1,35 @@
+Target Groups
+
+What they are: Logical groups of targets (EC2 instances, containers, IP addresses) that receive traffic from a load balancer.
+Role:
+They determine where to send the traffic.
+They track the health of your targets, ensuring traffic only goes to healthy instances.
+Features:
+Protocol and Port: You specify what kind of traffic they handle (e.g., HTTP port 80, HTTPS port 443).
+Health Checks: Regularly verify target health.
+Types of Targets: Can include EC2 instances, containers, or even IP addresses.
+Listeners
+
+What they are: Configurations on your load balancer that "listen" for incoming traffic.
+Role:
+Define how traffic first enters the load balancer.
+Specify the protocol and port for a connection (e.g., HTTPS on port 443).
+Can perform basic routing decisions based on URL patterns (for Application Load Balancers).
+Actions: Listeners determine what to do with the traffic:
+Forward to Target Group: The most common action, sending traffic to a specified target group.
+Redirect: Send traffic to a different location.
+Other Actions: Authenticate users, etc. (with Application Load Balancers).
+How They Work Together
+
+Incoming Traffic: A client request arrives at your load balancer.
+Listener's Turn: The load balancer has listeners configured for various protocols/ports. It finds the listener matching the request.
+Rule Evaluation: The listener may have routing rules to choose a target group.
+Target Group's Decision: The target group selects a healthy target from its pool.
+Response: The load balancer forwards the request to the chosen target, and the target processes the request and sends a response.
+Analogy
+
+Think of it like a mail sorting facility:
+
+Target Groups: Bins for different neighborhoods.
+Listener: The incoming mail truck arriving with a new batch.
+Listener Rules: Instructions deciding which bin the mail goes to based on the address.

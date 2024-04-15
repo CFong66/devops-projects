@@ -10,7 +10,7 @@
     state: present
 
 - name: Install boto3 using pip3
-  become: true
+  become: true  # grants elevated privileges (like sudo) for this task.
   pip:
     name: boto3
     state: present
@@ -30,10 +30,30 @@
 - name: Add HashiCorp GPG key
   become: yes
   shell: "wget -qO- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg"
+# wget -qO- https://apt.releases.hashicorp.com/gpg: This part of the command uses wget to retrieve the contents of the specified URL (https://apt.releases.hashicorp.com/gpg). 
+# The -qO- option tells wget to be quiet (-q) and output to stdout (-O-). So, it fetches the content of the URL and outputs it to the standard output.
+# |: This symbol is a pipe, which takes the output of the command on its left and uses it as the input for the command on its right.
+# gpg --dearmor: This part of the command takes the output from the previous command (the GPG key downloaded from the URL) and processes it using gpg with the --dearmor option. 
+# This option tells gpg to convert the armored format of the key into a binary format. This format is suitable for storage and use by APT.
+# |: Another pipe symbol, continuing the command chaining.
+# sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg: 
+# This part of the command takes the output of the previous command (the converted GPG key) 
+# and writes it to a file named hashicorp-archive-keyring.gpg located in the /usr/share/keyrings/ directory.
+
 
 - name: Add HashiCorp APT repository
   become: yes
   shell: "echo 'deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main' | sudo tee /etc/apt/sources.list.d/hashicorp.list"
+
+# shell:: This tells Ansible to execute the following command in the shell.
+# echo 'deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com 
+# {{ ansible_distribution_release }} main': This command constructs the APT repository entry for HashiCorp. 
+# It echoes a line containing the repository configuration to the standard output. The URL of the repository 
+# is interpolated using Ansible's ansible_distribution_release variable, which typically contains the codename of the operating system release (e.g., "bionic" for Ubuntu 18.04).
+# | sudo tee /etc/apt/sources.list.d/hashicorp.list: The output from the echo command is then piped (|) to tee, 
+# which writes it to a file named hashicorp.list in the /etc/apt/sources.list.d/ directory. 
+# The tee command is executed with sudo to ensure that the file is created with elevated privileges
+
 
 - name: Update apt cache
   become: yes

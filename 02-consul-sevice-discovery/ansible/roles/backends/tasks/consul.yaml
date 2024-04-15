@@ -27,6 +27,18 @@
     vars:
       server: "false"
       datacenter: "dc1"
+
+# template: This module is used to render Jinja2 templates.
+# src: Specifies the source template file (config.json.j2), which likely contains variables and template logic.
+# dest: Specifies the destination path for the rendered output (/etc/consul.d/config.json), where the final configuration file will be placed.
+# vars: Defines variables that will be available to the template during rendering.
+# server: Sets the value of the server variable to "false".
+# datacenter: Sets the value of the datacenter variable to "dc1".
+# This task will render the Consul configuration template (config.json.j2) 
+# using the provided variables (server and datacenter) and place the 
+# rendered output at /etc/consul.d/config.json. The template likely contains 
+# placeholders for these variables, allowing for dynamic configuration generation based on the specified values.
+  
   
   - name: Render Consul Backend Template
     template:

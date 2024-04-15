@@ -5,6 +5,20 @@
     executable: /usr/bin/python3
     remote_src: yes
   register: secret_value
+# Task Description:
+# name: This line provides a descriptive name for the task.
+# Task Execution:
+# script: Specifies the path to the script that will be executed. The script is located at 
+# {{ playbook_dir }}/scripts/get-ssh-pub.py. {{ playbook_dir }} is an Ansible variable representing the directory where the playbook is located.
+# Arguments:
+# args: Additional arguments for the script execution.
+# executable: Specifies the Python interpreter to use for executing the script. It's set to /usr/bin/python3.
+# remote_src: Indicates that the script is present on the remote host. This flag is set to yes, suggesting that the 
+# script is located on the remote machine where the playbook is being executed.
+# Register Output:
+# register: This parameter registers the output of the task to a variable named secret_value. 
+# This allows you to use the output in subsequent tasks.
+
 
 - name: Print registered variable
   debug:
@@ -15,3 +29,16 @@
     user: ubuntu
     state: present
     key: "{{ secret_value.stdout }}"
+
+
+# Task Description:
+# name: This line provides a descriptive name for the task.
+# Task Execution:
+# authorized_key: This module is used to manage SSH authorized keys.
+# Module Parameters:
+# user: Specifies the user account for which the authorized key should be managed. In this case, it's set to ubuntu.
+# state: Specifies the desired state of the authorized key. Here, it's set to present, 
+# indicating that the key should be present in the authorized_keys file.
+# key: This parameter specifies the public key that should be added to the authorized_keys file. 
+# The value is obtained from the secret_value.stdout variable, which presumably contains the public key retrieved from AWS Parameter Store in a previous task.
+#  "{{ secret_value.stdout }}" is a variable in ansible playbook or task.

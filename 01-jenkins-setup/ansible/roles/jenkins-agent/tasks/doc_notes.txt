@@ -1,0 +1,4 @@
+java.yaml is to install java JDK 17
+tools.yaml is to install python3, pip, ansible, terraform, AWS CLI stuff.
+ssh.yaml is to retrieve secret value from AWS Parameter Store, Print registered variable
+and Add public key to authorized_keys for ubuntu user
